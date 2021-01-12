@@ -1,31 +1,43 @@
 import math
 
+
+def merge(arr1, arr2):
+    output = []
+    target_output_legth  = len(arr1) + len(arr2)
+
+    while len(output) < target_output_legth:
+        if len(arr1) == 0:
+            output += arr2
+            arr2 = []
+        elif len(arr2) == 0:
+            output += arr1
+            arr1 = []
+        elif arr1[0] < arr2[0]:
+            output.append(arr1[0])
+            arr1 = arr1[1:]
+        else:
+            output.append(arr2[0])
+            arr2 = arr2[1:]
+
+    return output
+
 def merge_sort(arr):
-    unsorted_arr = []
-    if len(arr) == 1:
-        unsorted_arr.append(arr[0])
+    pass
 
-    if len(arr) % 2 == 0:
-        mid = len(arr)//2
-        left_array = [arr[:mid]]
-        right_array = [arr[mid:]]
-        merge_sort(left_array)
-        merge_sort(right_array)
-        print(left_array)
-        print(right_array)
-    else:
-        mid = len(arr)//2
-        left_array = [arr[:math.floor(mid)]]
-        mid_array = [arr[math.floor(mid)]]
-        right_array = [arr[math.ceil(mid):]]
-        merge_sort(left_array)
-        # merge_sort(mid_array)
-        merge_sort(right_array)
-        print(left_array)
-        print(right_array)
+def split(arr):
+    midpoint = len(arr)//2
+    arr1 = arr[:midpoint]
+    arr2 = arr[midpoint:]
 
-    return unsorted_arr
+    if len(arr1) <= 1 and len(arr2) <= 1:
+        return merge(arr1, arr2)
 
+    split_arr1 = split(arr1)
+    split_arr2 = split(arr2)
 
+    return merge(split_arr1, split_arr2)
 
-print(merge_sort([0,4,1,5,7]))
+print(split([100,2,3,400,5,6,7,8]))
+
+# print(merge_sort([0,4,1,5,7]))
+# print(merge([2,3], [3,6]))
